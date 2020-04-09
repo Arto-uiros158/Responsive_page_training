@@ -1,0 +1,288 @@
+// Файл "обнуляющих" стилей 
+@import "nullstyle.scss";
+
+body {
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	@media (max-width: 768px) {
+		&.lock {
+			overflow: hidden; /*позволяет избежать случайной прокрутки страницы в то время, пока открыто меню*/
+		}
+	}
+}
+
+.wrapper {
+	display: flex;
+	min-height: 100%;
+	overflow: hidden;
+	flex-direction: column;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 15px;
+	@media (max-width: 1200px) {
+		max-width: 970px;
+	}
+	@media (max-width: 992px) {
+		max-width: 750px;
+	}
+	@media (max-width: 768px) {
+		max-width: none;
+	}
+}
+
+.header {
+	position: fixed; /*с этим значением header всегда будет "прикручен" к верху страницы даже при прокрутке*/
+	width: 100%;
+	left: 0;
+	top: 0;
+	z-index: 10; /*большое значение z-index'а гарантирует, что элемент будет отображаться "выше" остальных элементов*/
+	&:before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: #3E6D76;
+		z-index: 3; /*для того, чтобы меню в адаптивном варианте не перекрывало шапку*/
+	}
+}
+.header__body {
+	position: relative;
+	/*z-index: 2; было нужно на начальном этапе верстки, чтобы видеть элементы шапки; при верстке адаптивности становится не нужным и заменяется z-index'ами в соответствующих элементах шапки*/
+	display: flex;
+	justify-content: space-between;
+	height: 80px;
+	align-items: center;
+	@media (max-width: 768px) {
+		height: 50px;
+	}
+}
+.header__logo {
+	flex: 0 0 60px;
+	border-radius: 50%;
+	overflow: hidden; /*закругляем картинку*/
+	position: relative;
+	z-index: 5;
+	@media (max-width: 768px) {
+		flex: 0 0 40px;
+	}
+	img {
+		max-width: 100%; /*на случай, если картинка будет больше контейнера*/
+		display: block; /*"боремся" с отступом у картинки снизу*/
+	} 
+}
+.header__burger {
+	display: none;
+	@media (max-width: 768px) {
+		display: block;
+		position: relative;
+		width: 30px;
+		height: 20px;
+		z-index: 5;
+		span {
+			background-color: #B9CFD4;
+			position: absolute;
+			width: 100%;
+			height: 2px;
+			left: 0; /*создаем среднюю часть бургера*/
+			top: 9px; /*расставляем части бургера по вертикали*/
+			transition: all 0.3s ease 0s;
+		}
+		&:before,
+		&:after {
+			content: '';
+			background-color: #B9CFD4;
+			position: absolute;
+			width: 100%;
+			height: 2px;
+			left: 0; /*создаем верхнюю и нижнюю часть бургера*/
+			transition: all 0.3s ease 0s;
+		}
+		&:before {
+			top: 0; /*расставляем части бургера по вертикали*/
+		}
+		&:after {
+			bottom: 0; /*расставляем части бургера по вертикали*/
+		}
+		&.active:before {
+			transform: rotate(45deg);
+			top: 9px; /*изменяем бургер на крестик*/
+		}
+		&.active:after {
+			transform: rotate(-45deg);
+			bottom: 9px; /*изменяем бургер на крестик*/
+		}
+		&.active span {
+			transform: scale(0); /*изменяем бургер на крестик*/
+		}
+	}
+}
+.header__menu {
+	@media (max-width: 768px) {
+		position: fixed;
+		top: -100%; /*скрываем меню*/
+		left: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto; /*на тот случай, если пункты меню не поместятся на экране*/
+		background-color: #688A91;
+		padding: 70px 10px 20px 10px;
+		transition: all 0.3s ease 0s;
+		&.active {
+			top: 0;
+		}
+	}
+}
+.header__list {
+	display: flex;
+	list-style: none;
+	position: relative;
+	z-index: 5;
+	@media (max-width: 768px) {
+		display: block;
+	}
+	li {
+		margin: 0 0 0 15px;
+		@media (max-width: 768px) {
+			margin: 0 0 20px 0;
+			padding: 0 0 20px 0;
+			border-bottom: 2px solid #B9CFD4;
+		}
+	}
+}
+.header__link {
+	width: 100px;
+	height: 20px;
+	background-color: #B9CFD4;
+	display: block;
+	@media (max-width: 992px) {
+		width: 85px;
+		height: 15px;
+	}
+	@media (max-width: 768px) {
+		width: 200px;
+		height: 20px;
+	}
+	&:hover {
+		color: #B9CFD4;
+		opacity: 0.5;
+		text-decoration: underline;
+	}
+}
+
+.content {
+	flex: 1 1 auto;
+}
+.content__title {
+	margin: 100px 0 20px 0;
+	font-size: 40px;
+	font-weight: bold;
+	@media (max-width: 992px) {
+		margin: 100px 0 10px 0;
+		font-size: 30px;
+	}
+	@media (max-width: 768px) {
+		margin: 70px 0 15px 0;
+		font-size: 25px;
+	}
+}
+
+.three-block {
+	margin: 0 0 15px 0;
+}
+.three-block__row {
+	display: flex;
+	margin: 0 -15px;
+	@media (max-width: 768px) {
+		flex-wrap: wrap;
+	}
+}
+.three-block__column {
+	display: flex;
+	flex: 0 1 33.33%;
+	margin: 0 0 15px 0;
+	padding: 0 15px;
+	@media (max-width: 768px) {
+		flex: 0 1 100%;
+		margin: 0 0 15px 0;
+		padding: 0 15px;
+	}
+}
+.three-block__item {
+	padding: 15px;
+	background-color: #688A91;
+}
+.three-block__image {
+	margin-bottom: 10px;
+	padding: 0 0 67% 0;
+	background-color: #B9CFD4;
+}
+.three-block__text {
+	color: #fff;
+	line-height: 20px;
+}
+
+.two-block {
+	margin: 0 0 15px 0;
+}
+.two-block__row {
+	display: flex;
+	margin: 0 -15px;
+	@media (max-width: 768px) {
+		flex-wrap: wrap;
+	}
+}
+.two-block__column {
+	display: flex;
+	flex: 0 1 50%;
+	margin: 0 0 15px 0;
+	padding: 0 15px;
+	@media (max-width: 768px) {
+		flex: 0 1 100%;
+	}
+}
+.two-block__item {
+	padding: 15px;
+	background-color: #688A91;
+}
+.two-block__image {
+	margin-bottom: 10px;
+	padding: 0 0 67% 0;
+	background-color: #B9CFD4;
+}
+.two-block__text {
+	color: #fff;
+	line-height: 20px;
+}
+
+.footer {
+	padding: 15px 0;
+	background-color: #3E6D76;
+	text-align: center;
+}
+.footer__row {
+	display: flex;
+	justify-content: space-between;
+}
+.footer__text {
+	display: block;
+	width: 150px;
+	height: 20px;
+	background-color: #B9CFD4;
+	@media (max-width: 1200px) {
+		width: 120px;
+		height: 15px;
+	}
+	@media (max-width: 992px) {
+		width: 100px;
+		height: 15px;
+	}
+	@media (max-width: 768px) {
+		width: 70px;
+		height: 10px;
+	}
+}
+
